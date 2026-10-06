@@ -1,0 +1,16 @@
+diff --git a/gear_sonic/examples/live_camera_teleop/soma_to_smpl.py b/gear_sonic/examples/live_camera_teleop/soma_to_smpl.py
+index efa2bd6..cd8d3ec 100644
+--- a/gear_sonic/examples/live_camera_teleop/soma_to_smpl.py
++++ b/gear_sonic/examples/live_camera_teleop/soma_to_smpl.py
+@@ -160,6 +160,11 @@ class SomaToSmpl:
+     @staticmethod
+     def _resolve_joint_names(soma_layer):
+         inner = getattr(soma_layer, "soma", soma_layer)
++        # SOMA documents public_joint_names as the 78 public joints (Root + the 77 returned by
++        # forward()); rig_data["joint_names"] is the expanded internal skeleton (110 with twist joints).
++        public = getattr(inner, "public_joint_names", None)
++        if public is not None and len(public) > 0:
++            return [str(x) for x in public]
+         rig = getattr(inner, "rig_data", None)
+         # rig_data is an NpzFile: .files lists key names, arrays come off the object.
+         if rig is not None and hasattr(rig, "files") and "joint_names" in rig.files:

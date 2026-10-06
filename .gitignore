@@ -1,0 +1,15 @@
+config.env
+.env
+*.env
+!config.example.env
+__pycache__/
+*.pyc
+.DS_Store
+outputs/
+*.mp4
+*.npz
+*.pt
+*.onnx
+*.trt
+*.engine
+.venv*/
